@@ -148,6 +148,8 @@ public class Seed {
             System.out.println(WHITE + "User password: " + WHITE_BOLD + "${number}");
             System.out.println("");
             System.out.println(WHITE_BOLD + "The ${number} variable is defined in a set between \"1\" and \"" + size + "\"");
+            System.out.println(CYAN + "Example: ");
+            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 5, " + WHITE + "email: " + WHITE_BOLD + "5, " + WHITE + "password/pin: " + WHITE_BOLD + "5, " + WHITE + "Number card: " + WHITE_BOLD + "5");
             System.out.println("");
             System.out.println(GREEN + "*----------------------------*");
             System.out.println(WHITE_BOLD + "    Seeder run successfuly");
