@@ -1,4 +1,4 @@
-package com.github.Entity;
+package Entity;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

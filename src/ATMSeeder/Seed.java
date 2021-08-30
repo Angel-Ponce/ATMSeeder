@@ -1,8 +1,12 @@
-package com.github.ATMSeeder;
+package ATMSeeder;
 
+import Entity.Person;
+import Entity.Properties;
+import Entity.Admin;
+import Entity.Ticket;
+import Entity.User;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import com.github.Entity.*;
 
 /**
  * Use this seed to generate a default data to the ATM project

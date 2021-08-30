@@ -1,6 +1,8 @@
-package com.github.ATMSeeder;
+package ATMSeeder;
 
-import com.github.Entity.*;
+import Entity.Person;
+import Entity.User;
+import Entity.Admin;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
