@@ -30,21 +30,38 @@ public class Seed {
 
     public static void main(String[] args) {
         int size = 0;
+        String adminName = "Super";
+        String adminLastName = "admin";
+        int adminPin = 12345;
         do {
             try {
-                System.out.print(WHITE + "Size of users: ");
+                System.out.print(WHITE + "Size of users: " + CYAN);
                 String entry = READ.nextLine();
                 System.out.println("");
                 size = Integer.parseInt(entry);
-            } catch (Exception e) {
-                System.err.println(RED + "Size must be a number (integer)");
+
+                System.out.print(WHITE + "Admin name: " + CYAN);
+                adminName = READ.nextLine();
+                System.out.println("");
+
+                System.out.print(WHITE + "Admin last name: " + CYAN);
+                adminLastName = READ.nextLine();
+                System.out.println("");
+
+                System.out.print(WHITE + "Admin pin: " + CYAN);
+                entry = READ.nextLine();
+                System.out.println("");
+                adminPin = Integer.parseInt(entry);
+
+            } catch (NumberFormatException e) {
+                System.err.println(RED + "Size and pin must be a number (integer)");
                 System.err.println("");
             }
         } while (size == 0);
-        generate(size);
+        generate(size, adminName.trim(), adminLastName.trim(), adminPin);
     }
 
-    public static void generate(int size) {
+    public static void generate(int size, String adminName, String adminLastName, int adminPin) {
 
         //Remove all files in database/profiles dir
         File profiles = new File("database/profiles/");
@@ -56,11 +73,8 @@ public class Seed {
         //Create an ArrayList of Persons
         ArrayList<Person> persons = new ArrayList<>();
         //First generate a unique admin
-        String adminName = Data.NAME_MAN[R.nextInt(Data.NAME_MAN.length)];
-        String adminLastName = Data.LASTNAME_MAN[R.nextInt(Data.LASTNAME_MAN.length)];
         int adminAge = R.nextInt(50);
         String adminEmail = adminName + "@gmail.com";
-        int adminPin = 3 * R.nextInt(100) + 1000;
         Date adminLastAccess = new Date();
         String adminPick = Data.PICK_MAN[R.nextInt(Data.PICK_MAN.length)];
         Helper.moveFile("/Resources/mens/" + adminPick, "database/profiles/" + adminPick);
