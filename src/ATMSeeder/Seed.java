@@ -6,10 +6,13 @@ import Entity.Admin;
 import Entity.Ticket;
 import Entity.User;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Use this seed to generate a default data to the ATM project
@@ -26,6 +29,7 @@ public class Seed {
     public static final String WHITE_BACKGROUND = "\033[47m";
     public static final String WHITE_BOLD = "\033[1;37m";
     public static final String WHITE = "\033[0;37m";
+    public static final String RESET = "\033[0m";
 
     public static void main(String[] args) {
         int size = 0;
@@ -66,6 +70,8 @@ public class Seed {
         Admin admin = new Admin(adminName, adminLastName, adminAge, adminEmail, adminPin, adminLastAccess, "database/profiles/" + adminPick);
         persons.add(admin);
 
+        System.out.println("seeding...");
+        System.out.append(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
             int cardNumber = i;
             int currentBalance = R.nextInt(10000);
@@ -91,7 +97,9 @@ public class Seed {
             User user = new User(cardNumber, currentBalance, maximumAmount, name, lastName, age, email, pin, lastAccess, "database/profiles/" + pick);
             Helper.moveFile("/Resources/" + sex + "/" + pick, "database/profiles/" + pick);
             persons.add(user);
+            System.out.append(WHITE_BACKGROUND + " ");
         }
+        System.out.println(WHITE + " ]");
 
         ArrayList<Ticket> tickets = new ArrayList();
         tickets.add(new Ticket(1, 10));
@@ -135,7 +143,7 @@ public class Seed {
             System.out.println(GREEN + "*----------------------------*");
             System.out.println("");
         } else {
-            System.err.println("Seeder failed");
+            System.err.println(RED + "Seeder failed");
         }
     }
 }
