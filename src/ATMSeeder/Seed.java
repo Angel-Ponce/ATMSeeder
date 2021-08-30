@@ -6,13 +6,10 @@ import Entity.Admin;
 import Entity.Ticket;
 import Entity.User;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Use this seed to generate a default data to the ATM project
