@@ -4,10 +4,12 @@ import Entity.Person;
 import Entity.Properties;
 import Entity.Admin;
 import Entity.Ticket;
+import Entity.Transaction;
 import Entity.User;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -106,6 +108,39 @@ public class Seed {
             Date lastAccess = new Date();
 
             User user = new User(cardNumber, currentBalance, maximumAmount, name, lastName, age, email, pin, lastAccess, "database/profiles/" + pick);
+            //Add 4 transactions per user
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            user.viewLatestTransactions().add(
+                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+            );
+            //Sending some changes of pin
+            user.setCountPinChanged(R.nextInt(10));
             Helper.moveFile("/Resources/" + sex + "/" + pick, "database/profiles/" + pick);
             persons.add(user);
             System.out.append(WHITE_BACKGROUND + " ");
