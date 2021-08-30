@@ -3,11 +3,19 @@ package ATMSeeder;
 import Entity.Person;
 import Entity.User;
 import Entity.Admin;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -59,5 +67,14 @@ public class Helper {
             e.printStackTrace(System.err);
         }
         return null;
+    }
+
+    public static void moveFile(String seed, String target) {
+        try {
+            BufferedImage file = ImageIO.read(Helper.class.getResourceAsStream(seed));
+            ImageIO.write((RenderedImage) file, "png", new File(target));
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
     }
 }
