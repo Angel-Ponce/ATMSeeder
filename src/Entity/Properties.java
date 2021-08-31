@@ -11,11 +11,13 @@ public class Properties implements Serializable {
     private String theme;
     private int currentBalance;
     private Person lastPerson;
+    private String date;
 
-    public Properties(String theme, int currentBalance, Person lastPerson) {
+    public Properties(String theme, int currentBalance, Person lastPerson, String date) {
         this.theme = theme;
         this.currentBalance = currentBalance;
         this.lastPerson = lastPerson;
+        this.date = date;
     }
 
     public Properties() {
@@ -43,6 +45,14 @@ public class Properties implements Serializable {
 
     public void setLastPerson(Person lastPerson) {
         this.lastPerson = lastPerson;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 }

@@ -7,7 +7,9 @@ import Entity.Ticket;
 import Entity.Transaction;
 import Entity.User;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
@@ -29,6 +31,7 @@ public class Seed {
     public static final String WHITE_BOLD = "\033[1;37m";
     public static final String WHITE = "\033[0;37m";
     public static final String RESET = "\033[0m";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     public static void main(String[] args) {
         int size = 0;
@@ -156,7 +159,10 @@ public class Seed {
         tickets.add(new Ticket(100, 10));
         tickets.add(new Ticket(200, 10));
 
-        Properties properties = new Properties("", 3860, persons.get(1));
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        now.add(Calendar.DAY_OF_MONTH, -1);
+        Properties properties = new Properties("", 3860, persons.get(1), DATE_FORMAT.format(now.getTime()));
 
         if (Helper.saveObjectToFile(persons, "database/Persons.txt")
                 && Helper.saveObjectToFile(tickets, "database/Tickets.txt")
