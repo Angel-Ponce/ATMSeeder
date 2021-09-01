@@ -2,6 +2,7 @@ package Entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -50,6 +51,21 @@ public class User extends Person implements Serializable {
 
     public int getMaximumAmount() {
         return maximumAmount;
+    }
+
+    public int getMaximumRetreatPerDay() {
+        int retreatsOnCurrentDay = (int) this.viewLatestTransactions().stream().filter((Transaction transaction) -> {
+            //Filter all transactions with:
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date());
+            Calendar date = Calendar.getInstance();
+            date.setTime(transaction.getDate());
+            return now.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
+                    && now.get(Calendar.MONTH) == date.get(Calendar.MONTH)
+                    && now.get(Calendar.YEAR) == date.get(Calendar.YEAR)
+                    && transaction.getType().equals(Transaction.RETREAT);
+        }).mapToDouble(transaction -> transaction.getAmount()).sum();
+        return maximumAmount - retreatsOnCurrentDay;
     }
 
     public void setMaximumAmount(int maximumAmount) {
