@@ -11,19 +11,19 @@ import java.util.Date;
  */
 public class User extends Person implements Serializable {
 
-    private int cardNumber;
+    private long cardNumber;
     private int currentBalance;
     private int maximumAmount;
     private int countPinChanged = 0;
     ArrayList<Transaction> latestTransactions = new ArrayList<Transaction>();
 
-    public User(int cardNumber, int currentBalance, int maximumAmount) {
+    public User(long cardNumber, int currentBalance, int maximumAmount) {
         this.cardNumber = cardNumber;
         this.currentBalance = currentBalance;
         this.maximumAmount = maximumAmount;
     }
 
-    public User(int cardNumber, int currentBalance, int maximumAmount, String name, String lastName, int age, String email, int pin, Date lastAccess, String pick) {
+    public User(long cardNumber, int currentBalance, int maximumAmount, String name, String lastName, int age, String email, int pin, Date lastAccess, String pick) {
         super(name, lastName, age, email, pin, lastAccess, pick);
         this.cardNumber = cardNumber;
         this.currentBalance = currentBalance;
@@ -33,11 +33,11 @@ public class User extends Person implements Serializable {
     public User() {
     }
 
-    public int getCardNumber() {
+    public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
 

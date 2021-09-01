@@ -35,6 +35,7 @@ public class Seed {
 
     public static void main(String[] args) {
         int size = 0;
+        int transactions = 10;
         String adminName = "Super";
         String adminLastName = "admin";
         int adminPin = 12345;
@@ -44,6 +45,11 @@ public class Seed {
                 String entry = READ.nextLine();
                 System.out.println("");
                 size = Integer.parseInt(entry);
+
+                System.out.print(WHITE + "Transactions per user: " + CYAN);
+                entry = READ.nextLine();
+                System.out.println("");
+                transactions = Integer.parseInt(entry);
 
                 System.out.print(WHITE + "Admin name: " + CYAN);
                 adminName = READ.nextLine();
@@ -63,10 +69,10 @@ public class Seed {
                 System.err.println("");
             }
         } while (size == 0);
-        generate(size, adminName.trim(), adminLastName.trim(), adminPin);
+        generate(size, adminName.trim(), adminLastName.trim(), adminPin, transactions);
     }
 
-    public static void generate(int size, String adminName, String adminLastName, int adminPin) {
+    public static void generate(int size, String adminName, String adminLastName, int adminPin, int transactions) {
 
         //Remove all files in database/profiles dir
         File profiles = new File("database/profiles/");
@@ -87,9 +93,13 @@ public class Seed {
         persons.add(admin);
 
         System.out.println("seeding...");
-        System.out.append(WHITE + "[ ");
+        System.out.print(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
-            int cardNumber = i;
+            String card = (i + "").repeat(16);
+            if (card.length() > 16) {
+                card = card.substring(0, 16);
+            }
+            long cardNumber = Long.valueOf(card);
             int currentBalance = R.nextInt(10000);
             int maximumAmount = R.nextInt(10000);
             String sex = Data.SEX[R.nextInt(Data.SEX.length)];
@@ -107,46 +117,35 @@ public class Seed {
             }
             int age = R.nextInt(75);
             String email = cardNumber + "";
-            int pin = cardNumber;
+            int pin = Integer.valueOf(card.substring(0, 4));
             Date lastAccess = new Date();
 
             User user = new User(cardNumber, currentBalance, maximumAmount, name, lastName, age, email, pin, lastAccess, "database/profiles/" + pick);
-            //Add 4 transactions per user
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
-            user.viewLatestTransactions().add(
-                    new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
-            );
+            for (int j = 0; j <= transactions; j++) {
+                String type = Data.TRANSACTION[R.nextInt(Data.TRANSACTION.length)];
+                switch (type) {
+                    case Transaction.RETREAT:
+                        user.viewLatestTransactions().add(
+                                new Transaction(R.nextInt(5000), Transaction.RETREAT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+                        );
+                        break;
+                    case Transaction.DEPOSIT:
+                        user.viewLatestTransactions().add(
+                                new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+                        );
+                        break;
+                    default:
+                        user.viewLatestTransactions().add(
+                                new Transaction(R.nextInt(5000), Transaction.DEPOSIT, new GregorianCalendar(2020, R.nextInt(12), R.nextInt(29), R.nextInt(24), R.nextInt(60), R.nextInt(60)).getTime())
+                        );
+                        break;
+                }
+            }
             //Sending some changes of pin
             user.setCountPinChanged(R.nextInt(10));
             Helper.moveFile("/Resources/" + sex + "/" + pick, "database/profiles/" + pick);
             persons.add(user);
-            System.out.append(WHITE_BACKGROUND + " ");
+            System.out.print(WHITE_BACKGROUND + " ");
         }
         System.out.println(WHITE + " ]");
 
@@ -184,13 +183,13 @@ public class Seed {
             System.out.println(GREEN + "*----------------------------*");
             System.out.println("");
             System.out.println(WHITE + "Each user follow the next pattern");
-            System.out.println(WHITE + "User email: " + WHITE_BOLD + "${number}");
-            System.out.println(WHITE + "User card number: " + WHITE_BOLD + "${number}");
-            System.out.println(WHITE + "User password: " + WHITE_BOLD + "${number}");
+            System.out.println(WHITE + "User email: " + WHITE_BOLD + "${number}*16");
+            System.out.println(WHITE + "User card number: " + WHITE_BOLD + "${number}*16");
+            System.out.println(WHITE + "User password: " + WHITE_BOLD + "${number}*4");
             System.out.println("");
             System.out.println(WHITE_BOLD + "The ${number} variable is defined in a set between \"1\" and \"" + size + "\"");
             System.out.println(CYAN + "Example: ");
-            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 5, " + WHITE + "email: " + WHITE_BOLD + "5, " + WHITE + "password/pin: " + WHITE_BOLD + "5, " + WHITE + "Number card: " + WHITE_BOLD + "5");
+            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 1, " + WHITE + "email: " + WHITE_BOLD + "1111111111111111, " + WHITE + "password/pin: " + WHITE_BOLD + "1111, " + WHITE + "Number card: " + WHITE_BOLD + "1111111111111111");
             System.out.println("");
             System.out.println(GREEN + "*----------------------------*");
             System.out.println(WHITE_BOLD + "    Seeder run successfuly");
