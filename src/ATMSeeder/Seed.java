@@ -91,7 +91,7 @@ public class Seed {
         Helper.moveFile("/Resources/mens/" + adminPick, "database/profiles/" + adminPick);
         Admin admin = new Admin(adminName, adminLastName, adminAge, adminEmail, adminPin, adminLastAccess, "database/profiles/" + adminPick);
         persons.add(admin);
-        
+        QueryBuilder.insert(admin); //Insert into database
         System.out.println("seeding...");
         System.out.print(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
@@ -145,6 +145,10 @@ public class Seed {
             user.setCountPinChanged(R.nextInt(10));
             Helper.moveFile("/Resources/" + sex + "/" + pick, "database/profiles/" + pick);
             persons.add(user);
+            QueryBuilder.insert(user); //Insert user into database
+            user.viewLatestTransactions().forEach(t -> {
+                QueryBuilder.insert(t, user.getCardNumber()); //Insert all transactions into database
+            });
             System.out.print(WHITE_BACKGROUND + " ");
         }
         System.out.println(WHITE + " ]");
@@ -157,12 +161,12 @@ public class Seed {
         tickets.add(new Ticket(50, 10));
         tickets.add(new Ticket(100, 10));
         tickets.add(new Ticket(200, 10));
-
+        QueryBuilder.insert(tickets); //Insert all tickets into database
         Calendar now = Calendar.getInstance();
         now.setTime(new Date());
         now.add(Calendar.DAY_OF_MONTH, -1);
         Properties properties = new Properties("", 3860, persons.get(1), DATE_FORMAT.format(now.getTime()));
-
+        QueryBuilder.insert(properties); //Insert properties into database
         if (Helper.saveObjectToFile(persons, "database/Persons.txt")
                 && Helper.saveObjectToFile(tickets, "database/Tickets.txt")
                 && Helper.saveObjectToFile(properties, "database/Properties.txt")) {
