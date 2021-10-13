@@ -91,7 +91,7 @@ public class Seed {
         Helper.moveFile("/Resources/mens/" + adminPick, "database/profiles/" + adminPick);
         Admin admin = new Admin(adminName, adminLastName, adminAge, adminEmail, adminPin, adminLastAccess, "database/profiles/" + adminPick);
         persons.add(admin);
-
+        
         System.out.println("seeding...");
         System.out.print(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
