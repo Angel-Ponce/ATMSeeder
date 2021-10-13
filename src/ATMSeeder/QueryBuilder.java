@@ -28,6 +28,7 @@ public class QueryBuilder {
             c.ps.setInt(5, admin.getPin());
             c.ps.setTimestamp(6, Timestamp.valueOf(TIMESTAMP.format(admin.getLastAccess())));
             c.ps.setString(7, admin.getPick());
+            c.ps.executeUpdate();
             c.con.close();
         } catch (SQLException e) {
             System.err.println(e);
@@ -50,6 +51,7 @@ public class QueryBuilder {
             c.ps.setInt(9, user.getCurrentBalance());
             c.ps.setInt(10, user.getMaximumAmount());
             c.ps.setInt(11, user.getCountPinChanged());
+            c.ps.executeUpdate();
             c.con.close();
         } catch (SQLException e) {
             System.err.println(e);
@@ -82,6 +84,7 @@ public class QueryBuilder {
             c.ps.setInt(2, properties.getCurrentBalance());
             c.ps.setLong(3, Helper.personToUser(properties.getLastPerson()).getCardNumber());
             c.ps.setString(4, properties.getDate());
+            c.ps.executeUpdate();
             c.con.close();
         } catch (SQLException e) {
             System.err.println(e);
