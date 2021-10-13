@@ -2,6 +2,7 @@ package ATMSeeder;
 
 import Entity.Admin;
 import Entity.User;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -25,7 +26,9 @@ public class QueryBuilder {
             c.ps.setInt(5, admin.getPin());
             c.ps.setTimestamp(6, Timestamp.valueOf(TIMESTAMP.format(admin.getLastAccess())));
             c.ps.setString(7, admin.getPick());
-        } catch (Exception e) {
+            c.con.close();
+        } catch (SQLException e) {
+            System.err.println(e);
         }
     }
 
@@ -45,7 +48,9 @@ public class QueryBuilder {
             c.ps.setInt(9, user.getCurrentBalance());
             c.ps.setInt(10, user.getMaximumAmount());
             c.ps.setInt(11, user.getCountPinChanged());
-        } catch (Exception e) {
+            c.con.close();
+        } catch (SQLException e) {
+            System.err.println(e);
         }
     }
 }
