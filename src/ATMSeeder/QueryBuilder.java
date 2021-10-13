@@ -2,11 +2,13 @@ package ATMSeeder;
 
 import Entity.Admin;
 import Entity.Properties;
+import Entity.Ticket;
 import Entity.Transaction;
 import Entity.User;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  *
@@ -85,6 +87,22 @@ public class QueryBuilder {
             c.ps.setLong(3, Helper.personToUser(properties.getLastPerson()).getCardNumber());
             c.ps.setString(4, properties.getDate());
             c.ps.executeUpdate();
+            c.con.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void insert(ArrayList<Ticket> tickets) {
+        try {
+            Connecter c = new Connecter();
+            c.con = c.getConnection();
+            for (Ticket t : tickets) {
+                c.ps = c.con.prepareStatement("INSERT INTO ticket (type,size) VALUES(?,?)");
+                c.ps.setInt(1, t.getType());
+                c.ps.setInt(2, t.getSize());
+                c.ps.executeUpdate();
+            }
             c.con.close();
         } catch (SQLException e) {
             System.err.println(e);
