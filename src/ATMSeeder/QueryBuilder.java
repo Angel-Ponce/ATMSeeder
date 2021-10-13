@@ -1,12 +1,12 @@
 package ATMSeeder;
 
 import Entity.Admin;
+import Entity.Properties;
 import Entity.Transaction;
 import Entity.User;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
@@ -67,6 +67,21 @@ public class QueryBuilder {
             c.ps.setTimestamp(3, time);
             c.ps.setLong(4, cardNumber);
             c.ps.executeUpdate();
+            c.con.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void insert(Properties properties) {
+        try {
+            Connecter c = new Connecter();
+            c.con = c.getConnection();
+            c.ps = c.con.prepareStatement("INSERT INTO properties (theme,current_balance,last_card_number,date) VALUES(?,?,?,?)");
+            c.ps.setString(1, properties.getTheme());
+            c.ps.setInt(2, properties.getCurrentBalance());
+            c.ps.setLong(3, Helper.personToUser(properties.getLastPerson()).getCardNumber());
+            c.ps.setString(4, properties.getDate());
             c.con.close();
         } catch (SQLException e) {
             System.err.println(e);
