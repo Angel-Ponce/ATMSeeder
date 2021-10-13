@@ -28,4 +28,20 @@ public class QueryBuilder {
         } catch (Exception e) {
         }
     }
+
+    public static void insert(User user) {
+        try {
+            Connecter c = new Connecter();
+            c.con = c.getConnection();
+            c.ps = c.con.prepareStatement("INSERT INTO \"admin\"(name,last_name,age,email,pin,last_access,pick) VALUES (?,?,?,?,?,?,?)");
+            c.ps.setString(1, user.getName());
+            c.ps.setString(2, user.getLastName());
+            c.ps.setInt(3, user.getAge());
+            c.ps.setString(4, user.getEmail());
+            c.ps.setInt(5, user.getPin());
+            c.ps.setTimestamp(6, Timestamp.valueOf(TIMESTAMP.format(user.getLastAccess())));
+            c.ps.setString(7, user.getPick());
+        } catch (Exception e) {
+        }
+    }
 }
