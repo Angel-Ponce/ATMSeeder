@@ -41,7 +41,7 @@ public class QueryBuilder {
         try {
             Connecter c = new Connecter();
             c.con = c.getConnection();
-            c.ps = c.con.prepareStatement("INSERT INTO \"admin\"(card_number,name,last_name,age,email,pin,last_access,pick,current_balance,maximum_amount,count_pin_changed) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            c.ps = c.con.prepareStatement("INSERT INTO \"user\"(card_number,name,last_name,age,email,pin,last_access,pick,current_balance,maximum_amount,count_pin_changed) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             c.ps.setLong(1, user.getCardNumber());
             c.ps.setString(2, user.getName());
             c.ps.setString(3, user.getLastName());
