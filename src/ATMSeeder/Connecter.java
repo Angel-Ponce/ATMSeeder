@@ -19,19 +19,12 @@ public class Connecter {
     public ResultSet rs;
     public Connection con;
 
-    static {
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } catch (ClassNotFoundException ex) {
-            System.err.println(ex);
-        }
-    }
-
     public Connection getConnection() {
         Connection connection = null;
         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             System.err.println(ex);
         }
         return connection;
