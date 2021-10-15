@@ -95,10 +95,11 @@ public class Seed {
         System.out.println("seeding...");
         System.out.print(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
-            String card = (i + "").repeat(16);
-            if (card.length() > 16) {
-                card = card.substring(0, 16);
+            if (String.valueOf(i).length() >= 16) {
+                System.out.println(RED + "Limit of users has been exceded");
+                break;
             }
+            String card = i + "0".repeat(16 - String.valueOf(i).length());
             long cardNumber = Long.valueOf(card);
             int currentBalance = R.nextInt(10000);
             int maximumAmount = R.nextInt(10000);
@@ -121,7 +122,7 @@ public class Seed {
             Date lastAccess = new Date();
 
             User user = new User(cardNumber, currentBalance, maximumAmount, name, lastName, age, email, pin, lastAccess, "database/profiles/" + pick);
-            for (int j = 0; j <= transactions; j++) {
+            for (int j = 0; j < transactions; j++) {
                 String type = Data.TRANSACTION[R.nextInt(Data.TRANSACTION.length)];
                 switch (type) {
                     case Transaction.RETREAT:
@@ -187,13 +188,18 @@ public class Seed {
             System.out.println(GREEN + "*----------------------------*");
             System.out.println("");
             System.out.println(WHITE + "Each user follow the next pattern");
-            System.out.println(WHITE + "User email: " + WHITE_BOLD + "${number}*16");
-            System.out.println(WHITE + "User card number: " + WHITE_BOLD + "${number}*16");
-            System.out.println(WHITE + "User password: " + WHITE_BOLD + "${number}*4");
+            System.out.println(WHITE + "User email: " + WHITE_BOLD + "${number}+0{16-$number.length}");
+            System.out.println(WHITE + "User card number: " + WHITE_BOLD + "${number}+0{16-$number.length}");
+            System.out.println(WHITE + "User password: " + WHITE_BOLD + "${email}.subString(0,4)");
             System.out.println("");
             System.out.println(WHITE_BOLD + "The ${number} variable is defined in a set between \"1\" and \"" + size + "\"");
             System.out.println(CYAN + "Example: ");
-            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 1, " + WHITE + "email: " + WHITE_BOLD + "1111111111111111, " + WHITE + "password/pin: " + WHITE_BOLD + "1111, " + WHITE + "Number card: " + WHITE_BOLD + "1111111111111111");
+            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 1, " + WHITE + "email: " + WHITE_BOLD + "1000000000000000, " + WHITE + "password/pin: " + WHITE_BOLD + "1000, " + WHITE + "Number card: " + WHITE_BOLD + "1000000000000000");
+            System.out.println("");
+            System.out.println(CYAN + "Other Example: ");
+            System.out.println(WHITE + "User " + WHITE_BOLD + "No. 136, " + WHITE + "email: " + WHITE_BOLD + "1360000000000000, " + WHITE + "password/pin: " + WHITE_BOLD + "1360, " + WHITE + "Number card: " + WHITE_BOLD + "1360000000000000");
+            System.out.println("");
+            System.out.println(WHITE_BOLD + "***Always you can see your database to know all information of this users***");
             System.out.println("");
             System.out.println(GREEN + "*----------------------------*");
             System.out.println(WHITE_BOLD + "    Seeder run successfuly");
