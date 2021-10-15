@@ -85,7 +85,7 @@ public class Seed {
         ArrayList<Person> persons = new ArrayList<>();
         //First generate a unique admin
         int adminAge = R.nextInt(50);
-        String adminEmail = adminName + "@gmail.com";
+        String adminEmail = adminName.toLowerCase() + "@gmail.com";
         Date adminLastAccess = new Date();
         String adminPick = Data.PICK_MAN[R.nextInt(Data.PICK_MAN.length)];
         Helper.moveFile("/Resources/mens/" + adminPick, "database/profiles/" + adminPick);
@@ -95,6 +95,18 @@ public class Seed {
         System.out.println("seeding...");
         System.out.print(WHITE + "[ ");
         for (int i = 1; i <= size; i++) {
+            /*
+            Preview 10 multiplicators
+            Why?
+            Cause the iteration number "1" generates the card number "1000000000000000"
+            same the iteration number "10".
+            And this repeat when the iteration number "n" fulfills that "n%10 == 0"
+             */
+            if (i % 10 == 0) {
+                i++;
+                size++;
+            }
+            //Preview limit break
             if (String.valueOf(i).length() >= 16) {
                 System.out.println(RED + "Limit of users has been exceded");
                 break;
